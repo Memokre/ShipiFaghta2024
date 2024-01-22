@@ -31,7 +31,7 @@ public:
     }
 
 };
-
+//create randomised enemz grid, following the same rules as the plazergrid
 void Enemy::generateEnemyGrid() {
 
     enemyGrid = std::vector<std::vector<char>>(10, std::vector<char>(10, 'E'));
@@ -102,7 +102,7 @@ void Enemy::generateEnemyGrid() {
     }
 }
 
-
+//shows grid, e and S tiles have the same colour
 void Enemy::showEnemyGrid(sf::RenderWindow& window, const std::vector<std::vector<char>>& enemyField, const sf::Vector2f& gridStartPosition, float cellSize, float cellSpacing) {
     for (size_t i = 0; i < enemyField.size(); ++i) {
         for (size_t j = 0; j < enemyField[i].size(); ++j) {
@@ -125,7 +125,7 @@ void Enemy::showEnemyGrid(sf::RenderWindow& window, const std::vector<std::vecto
 std::vector<std::vector<char>>& Enemy::getEnemyGrid() {
     return enemyGrid;
 }
-
+//medium ai, that seearches for anz previous hits on the grid to finish of enemz ships
 void mediumAI(std::vector<std::vector<char>>& playerField, int& targetX, int& targetY) {
     int fieldSize = playerField.size();
     bool validTarget = false;
@@ -207,7 +207,7 @@ void mediumAI(std::vector<std::vector<char>>& playerField, int& targetX, int& ta
 }
 
 
-
+// works as medium ai, just in case of not finding any H tiles, it has 50% chance to gain information about position of enemy ship
 void hardAI(std::vector<std::vector<char>>& playerField, int& targetX, int& targetY) {
     int fieldSize = playerField.size();
     bool validTarget = false;
@@ -299,7 +299,7 @@ void hardAI(std::vector<std::vector<char>>& playerField, int& targetX, int& targ
 }
 
 
-
+//handles enemy turn, based on the selected difficulty
 void Enemy::enemyTurn(std::vector<std::vector<char>>& playerField, int difficulty) {
     int fieldSize = playerField.size();
 

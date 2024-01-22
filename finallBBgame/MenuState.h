@@ -61,7 +61,7 @@ void displayHelp(sf::RenderWindow& window, sf::Font& font) {
 
         // Display all help sections
         for (const auto& section : helpSections) {
-            titleText.setString(section.first);
+            titleText.setString(section.first);// vector split
             descriptionText.setString(section.second);
 
             // Center horizontally
@@ -73,12 +73,12 @@ void displayHelp(sf::RenderWindow& window, sf::Font& font) {
             window.draw(titleText);
             window.draw(descriptionText);
 
-            // Reset position for the next section
-            titleText.setPosition(100, titleText.getPosition().y + 200); // Adjust vertical spacing
-            descriptionText.setPosition(100, descriptionText.getPosition().y + 200); // Adjust vertical spacing
+           
+            titleText.setPosition(100, titleText.getPosition().y + 200); 
+            descriptionText.setPosition(100, descriptionText.getPosition().y + 200);
         }
 
-        // Reset positions for the next iteration
+        
         titleText.setPosition(100, 100);
         descriptionText.setPosition(100, 150);
 
@@ -87,7 +87,7 @@ void displayHelp(sf::RenderWindow& window, sf::Font& font) {
 }
 
 class MenuState {
-private:
+private://menu
     sf::RenderWindow& window;
     sf::Font& font;
     int selectedOption;
@@ -112,7 +112,7 @@ public:
         std::vector<std::string> menuOptions = { "Sink  them all!", "       Help   ", "       Quit   " };
        
         
-        //fucking moooouse matey 
+        //fucking moooouse => clickable areas 
         struct ClickableArea {
             sf::FloatRect bounds;
             int option;
@@ -180,7 +180,7 @@ public:
                     }
                 }
             
-                else if (event.type == sf::Event::KeyPressed) {
+                else if (event.type == sf::Event::KeyPressed) { //keyboard
                     if (event.key.code == sf::Keyboard::Up || event.key.code == sf::Keyboard::W) {
                         selectedOption = (selectedOption + menuOptions.size() - 1) % menuOptions.size();
                     }
@@ -214,7 +214,7 @@ public:
             sf::Vector2f textBounds = sf::Text(menuOptions[0], font, 30).getGlobalBounds().getSize();
             float spacing = 70.0f; 
             sf::Vector2f textPosition((windowSize.x - textBounds.x) / 2, (windowSize.y - (textBounds.y + spacing) * menuOptions.size()) / 2);
-            // collor switching for better readability
+            // collor switching 
             for (size_t i = 0; i < menuOptions.size(); ++i) {
                 sf::Text menuText(menuOptions[i], font);
                 menuText.setCharacterSize(30);

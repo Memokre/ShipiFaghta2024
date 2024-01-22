@@ -11,7 +11,7 @@ the phase where players sets up their field
 
 
 
-//the ship data determines the choices of ships
+//the ship data determines what ships are being placed
 class ShipData {
 public:
     struct Ship {
@@ -35,7 +35,7 @@ public:
     Ship getNextShip() {
         for (auto& ship : ships) {
             if (ship.count > 0) {
-                ship.count--; // Decrement ship count
+                ship.count--; 
                 return ship;
             }
         }
@@ -77,7 +77,7 @@ public:
         ini.startall();
         ini.getSetupMusic().setLoop(true);
         ini.getSetupMusic().play();
-        // Variables to store ship length and count
+     
         int shipLength = 0;
         int shipCount = 0;
 
@@ -88,7 +88,7 @@ public:
             shipCount = nextShip.count;
         }
 
-        std::vector<std::vector<char>> shipGrid(10, std::vector<char>(10, 'E')); // Initialize ship placement grid
+        std::vector<std::vector<char>> shipGrid(10, std::vector<char>(10, 'E')); // Initialize player grid
 
         sf::RectangleShape placementRect(sf::Vector2f(cellSize * shipLength + (cellSpacing * (shipLength - 1)), cellSize));
         placementRect.setFillColor(sf::Color::Transparent);
@@ -104,6 +104,7 @@ public:
                     window.close();
                 }
                 else if (event.type == sf::Event::MouseMoved) {
+                    //fucking mouse matey
                     sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
                     sf::Vector2f relativePosition = static_cast<sf::Vector2f>(mousePosition) - gridStartPosition;
 
@@ -113,7 +114,7 @@ public:
                     int gridX = static_cast<int>(adjustedX / (cellSize + cellSpacing));
                     int gridY = static_cast<int>(adjustedY / (cellSize + cellSpacing));
 
-                    // Update placementCursorPos based on the mouse position
+                    
                     placementCursorPos.x = gridStartPosition.x + gridX * (cellSize + cellSpacing);
                     placementCursorPos.y = gridStartPosition.y + gridY * (cellSize + cellSpacing);
                 }
@@ -175,37 +176,37 @@ public:
                                 if (x >= 0 && x < 10 && y >= 0 && y < 10) {
                                     if (playerField[x][y] != 'E') {
                                         canPlaceShip = false;
-                                        break; // Break inner loop
+                                        break; 
                                     }
-                                    // Check adjacent positions for existing ships
+                                    // Check for nearby ships
                                     if ((x > 0 && playerField[x - 1][y] == 'S') || // Check left
                                         (x < 9 && playerField[x + 1][y] == 'S') || // Check right
                                         (y > 0 && playerField[x][y - 1] == 'S') || // Check up
                                         (y < 9 && playerField[x][y + 1] == 'S')) { // Check down
                                         canPlaceShip = false;
-                                        break; // Break inner loop
+                                        break;
                                     }
                                 }
                                 else {
                                     canPlaceShip = false;
-                                    break; // Break inner loop
+                                    break;
                                 }
                             }
                             if (!canPlaceShip) {
-                                break; // Break outer loop
+                                break; 
                             }
                         }
 
                         // If all coordinates are empty, place the ship
                         if (canPlaceShip) {
-                            // Update the playerField grid with the ship's position
+                            // Update the playerField
                             for (int i = 0; i < shipLength; ++i) {
                                 int x = (placementCursorPos.x - gridStartPosition.x) / (cellSize + cellSpacing) + (verticalOrientation ? 0 : i);
                                 int y = (placementCursorPos.y - gridStartPosition.y) / (cellSize + cellSpacing) + (verticalOrientation ? i : 0);
-                                playerField[x][y] = 'S'; // Mark ship position
+                                playerField[x][y] = 'S'; // Mark ship 
                             }
 
-                            // Decrement ship count and fetch the next ship
+                   //take next ship
                             ShipData::Ship nextShip = shipData.getNextShip();
                             if (!nextShip.name.empty()) {
                                 shipLength = nextShip.length;
@@ -225,12 +226,12 @@ public:
                      
                 else if (event.type == sf::Event::MouseButtonPressed) {
                     if (event.mouseButton.button == sf::Mouse::Right) {
-                    // Right mouse button logic (toggle orientation)
+                 
                     verticalOrientation = !verticalOrientation;
-    }
+    }// v princ9pe len kopia enter buttnu
                     if (event.mouseButton.button == sf::Mouse::Left) {
                         bool canPlaceShip = true;
-                        // Check if all coordinates covered by the ship are empty ('E')
+
                         for (int i = 0; i < shipLength; ++i) {
                             for (int j = 0; j < shipLength; ++j) {
                                 int x = (placementCursorPos.x - gridStartPosition.x) / (cellSize + cellSpacing) + i;
@@ -239,37 +240,35 @@ public:
                                 if (x >= 0 && x < 10 && y >= 0 && y < 10) {
                                     if (playerField[x][y] != 'E') {
                                         canPlaceShip = false;
-                                        break; // Break inner loop
+                                        break; 
                                     }
-                                    // Check adjacent positions for existing ships
+                           
                                     if ((x > 0 && playerField[x - 1][y] == 'S') || // Check left
                                         (x < 9 && playerField[x + 1][y] == 'S') || // Check right
                                         (y > 0 && playerField[x][y - 1] == 'S') || // Check up
                                         (y < 9 && playerField[x][y + 1] == 'S')) { // Check down
                                         canPlaceShip = false;
-                                        break; // Break inner loop
+                                        break; 
                                     }
                                 }
                                 else {
                                     canPlaceShip = false;
-                                    break; // Break inner loop
+                                    break; 
                                 }
                             }
                             if (!canPlaceShip) {
-                                break; // Break outer loop
+                                break; 
                             }
                         }
 
-                        // If all coordinates are empty, place the ship
                         if (canPlaceShip) {
-                            // Update the playerField grid with the ship's position
+                            
                             for (int i = 0; i < shipLength; ++i) {
                                 int x = (placementCursorPos.x - gridStartPosition.x) / (cellSize + cellSpacing) + (verticalOrientation ? 0 : i);
                                 int y = (placementCursorPos.y - gridStartPosition.y) / (cellSize + cellSpacing) + (verticalOrientation ? i : 0);
-                                playerField[x][y] = 'S'; // Mark ship position
+                                playerField[x][y] = 'S'; 
                             }
 
-                            // Decrement ship count and fetch the next ship
                             ShipData::Ship nextShip = shipData.getNextShip();
                             if (!nextShip.name.empty()) {
                                 shipLength = nextShip.length;
@@ -286,11 +285,11 @@ public:
                 }
 
             }
+            //show stuff
 
-
-            // Render ship placement grid
+            
             window.clear();
-            renderGrid(window, playerField, gridStartPosition, cellSize, cellSpacing); // Using playerField
+            renderGrid(window, playerField, gridStartPosition, cellSize, cellSpacing); 
             placementRect.setSize(verticalOrientation ?
                 sf::Vector2f(cellSize, cellSize * shipLength + (cellSpacing * (shipLength - 1))) :
                 sf::Vector2f(cellSize * shipLength + (cellSpacing * (shipLength - 1)), cellSize));
